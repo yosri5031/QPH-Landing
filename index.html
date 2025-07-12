@@ -18,23 +18,35 @@
             overflow: hidden;
         }
 
-        .header {
+      .header {
+    display: flex;
+    justify-content: center; /* Center the logo */
+    padding: 20px 0; /* Top and bottom padding for the header */
+    background: white; /* White background for the header */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+}
+
+.logo-container {
+    padding: 10px; /* Padding around logo */
+}
+
+.logo {
+    height: auto; /* Maintain aspect ratio */
+    width: 200px; /* Adjust based on design needs */
+    max-width: 100%; /* Responsive sizing */
+}
+
+
+        .logo-placeholder {
+            width: 200px;
+            height: 50px;
+          
             display: flex;
-            justify-content: center; /* Center the logo */
-            padding: 20px 0; /* Top and bottom padding for the header */
-            background: white; /* White background for the header */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
-        }
-
-        .logo-container {
-            padding: 10px; /* Padding around logo */
-            text-align: center; /* Center the logo */
-        }
-
-        .logo {
-            height: 75px; /* Maintain aspect ratio */
-            width: auto; /* Adjust based on design needs */
-            max-width: 100%; /* Responsive sizing */
+            align-items: center;
+            justify-content: center;
+          
+            font-weight: 600;
+            font-size: 14px;
         }
 
         .hero {
@@ -56,7 +68,6 @@
             font-size: clamp(2.5rem, 8vw, 4.5rem);
             font-weight: 800;
             color: white;
-            margin-top: 20px; /* Added margin to separate logo and title */
             margin-bottom: 30px;
             line-height: 1.1;
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -101,6 +112,7 @@
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             color: white;
             font-size: 16px;
             font-weight: 500;
@@ -231,8 +243,10 @@
                 padding: 15px 20px;
             }
             
-            .logo {
-                width: 150px; /* Adjust logo size for smaller screens */
+            .logo-placeholder {
+                width: 150px;
+                height: 40px;
+                font-size: 12px;
             }
             
             .hero {
@@ -257,11 +271,11 @@
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo-container">
-            <img src="https://cdn.shopify.com/s/files/1/0671/1387/7804/files/quickprinthub-removebg-preview.png?v=1752340233" alt="Quick PrintHub Logo" class="logo">
-        </div>
-    </header>
+   <header class="header">
+    <div class="logo-container">
+        <img src="https://cdn.shopify.com/s/files/1/0671/1387/7804/files/quickprinthub-removebg-preview.png?v=1752340233" alt="Quick PrintHub Logo" class="logo">
+    </div>
+</header>
 
     <section class="hero">
         <div class="grid-pattern"></div>
