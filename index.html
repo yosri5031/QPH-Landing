@@ -18,16 +18,24 @@
             overflow: hidden;
         }
 
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 20px 40px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(3px);
-            z-index: 100;
-        }
+      .header {
+    display: flex;
+    justify-content: center; /* Center the logo */
+    padding: 20px 0; /* Top and bottom padding for the header */
+    background: white; /* White background for the header */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+}
+
+.logo-container {
+    padding: 10px; /* Padding around logo */
+}
+
+.logo {
+    height: auto; /* Maintain aspect ratio */
+    width: 200px; /* Adjust based on design needs */
+    max-width: 100%; /* Responsive sizing */
+}
+
 
         .logo-placeholder {
             width: 200px;
@@ -263,11 +271,11 @@
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo-placeholder">
-            <img src="https://cdn.shopify.com/s/files/1/0671/1387/7804/files/quickprinthub-removebg-preview.png?v=1752340233" height="100px" width="150px">
-        </div>
-    </header>
+   <header class="header">
+    <div class="logo-container">
+        <img src="https://cdn.shopify.com/s/files/1/0671/1387/7804/files/quickprinthub-removebg-preview.png?v=1752340233" alt="Quick PrintHub Logo" class="logo">
+    </div>
+</header>
 
     <section class="hero">
         <div class="grid-pattern"></div>
