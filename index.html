@@ -18,43 +18,48 @@
             overflow: hidden;
         }
 
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 20px 40px;
-        
-            z-index: 100;
-        }
-
-        .logo-placeholder {
-            width: 200px;
-            height: 50px;
-            background: rgba(33, 150, 243, 0.2);
-            border: 2px solid #2196F3;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #2196F3;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
         .hero {
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             text-align: center;
-            padding: 100px 20px 20px;
+            padding: 40px 20px 20px;
             position: relative;
         }
 
         .hero-content {
-            max-width: 800px;
+            max-width: 900px;
             z-index: 10;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-placeholder {
+            width: 300px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 248, 248, 0.96) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 15px 50px rgba(255, 255, 255, 0.25),
+                0 5px 20px rgba(33, 150, 243, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .logo-placeholder img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: brightness(1.1) contrast(1.05);
         }
 
         .main-headline {
@@ -109,7 +114,7 @@
             color: white;
             font-size: 16px;
             font-weight: 500;
-            min-width: 180px;
+            min-width: 200px;
             transition: all 0.3s ease;
             cursor: pointer;
         }
@@ -142,6 +147,13 @@
             overflow: hidden;
             text-transform: uppercase;
             letter-spacing: 1px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .cta-button.enabled {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .cta-button::before {
@@ -155,11 +167,11 @@
             transition: left 0.6s ease;
         }
 
-        .cta-button:hover::before {
+        .cta-button.enabled:hover::before {
             left: 100%;
         }
 
-        .cta-button:hover {
+        .cta-button.enabled:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 50px rgba(33, 150, 243, 0.6);
         }
@@ -232,18 +244,14 @@
         }
 
         @media (max-width: 768px) {
-            .header {
-                padding: 15px 20px;
-            }
-            
             .logo-placeholder {
-                width: 150px;
-                height: 40px;
-                font-size: 12px;
+                width: 250px;
+                height: 80px;
+                padding: 12px;
             }
             
             .hero {
-                padding: 80px 15px 20px;
+                padding: 30px 15px 20px;
             }
             
             .selection-controls {
@@ -253,7 +261,7 @@
             }
             
             .select-box {
-                min-width: 250px;
+                min-width: 280px;
             }
             
             .cta-button {
@@ -261,15 +269,17 @@
                 font-size: 16px;
             }
         }
+
+        @media (max-width: 480px) {
+            .logo-placeholder {
+                width: 220px;
+                height: 70px;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo-placeholder">
-            [Replace with your logo]
-        </div>
-    </header>
-
     <section class="hero">
         <div class="grid-pattern"></div>
         
@@ -281,6 +291,12 @@
         </div>
 
         <div class="hero-content">
+            <div class="logo-container">
+                <div class="logo-placeholder">
+                    <img src="https://cdn.shopify.com/s/files/1/0671/1387/7804/files/quickprinthub-removebg-preview.png?v=1752340233" alt="QuickPrintHub Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='QuickPrintHub';">
+                </div>
+            </div>
+
             <h1 class="main-headline" id="headline">
                 Order by 2pm receive your prints by <span class="highlight">7pm</span>
             </h1>
@@ -298,10 +314,22 @@
                 </div>
                 
                 <div class="control-group">
-                    <select class="select-box highlighted" id="region">
-                        <option value="canada" selected>🇨🇦 Canada</option>
-                        <option value="usa">🇺🇸 USA</option>
-                        <option value="north-africa">🌍 North Africa</option>
+                    <select class="select-box highlighted" id="country">
+                        <option value="">Select Country</option>
+                        <option value="canada">🇨🇦 Canada</option>
+                        <option value="tunisia">🇹🇳 Tunisia</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <select class="select-box" id="region" style="display: none;">
+                        <option value="">Select Province/Governorate</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <select class="select-box" id="city" style="display: none;">
+                        <option value="">Select City</option>
                     </select>
                 </div>
             </div>
@@ -317,25 +345,146 @@
             en: {
                 headline: 'Order by 2pm receive your prints by <span class="highlight">7pm</span>',
                 subtitle: 'Fast, reliable printing service with same-day delivery',
-                cta: 'Start Printing'
+                cta: 'Start Printing',
+                selectCountry: 'Select Country',
+                selectRegion: 'Select Province/Governorate',
+                selectCity: 'Select City'
             },
             fr: {
                 headline: 'Commandez avant 14h recevez vos impressions à <span class="highlight">19h</span>',
                 subtitle: 'Service d\'impression rapide et fiable avec livraison le jour même',
-                cta: 'Commencer l\'impression'
+                cta: 'Commencer l\'impression',
+                selectCountry: 'Sélectionner le pays',
+                selectRegion: 'Sélectionner Province/Gouvernorat',
+                selectCity: 'Sélectionner la ville'
             }
         };
 
-        document.getElementById('language').addEventListener('change', function() {
-            const selectedLang = this.value;
+        const locationData = {
+            canada: {
+                'Ontario': ['Toronto', 'Ottawa', 'Hamilton', 'London', 'Windsor', 'Kitchener', 'Mississauga', 'Brampton'],
+                'Quebec': ['Montreal', 'Quebec City', 'Laval', 'Gatineau', 'Longueuil', 'Sherbrooke', 'Saguenay'],
+                'British Columbia': ['Vancouver', 'Victoria', 'Surrey', 'Burnaby', 'Richmond', 'Abbotsford', 'Coquitlam'],
+                'Alberta': ['Calgary', 'Edmonton', 'Red Deer', 'Lethbridge', 'Medicine Hat', 'Grande Prairie'],
+                'Manitoba': ['Winnipeg', 'Brandon', 'Steinbach', 'Thompson', 'Portage la Prairie'],
+                'Saskatchewan': ['Saskatoon', 'Regina', 'Prince Albert', 'Moose Jaw', 'Swift Current'],
+                'Nova Scotia': ['Halifax', 'Sydney', 'Dartmouth', 'Truro', 'New Glasgow'],
+                'New Brunswick': ['Saint John', 'Moncton', 'Fredericton', 'Dieppe', 'Miramichi'],
+                'Newfoundland and Labrador': ['St. Johns', 'Mount Pearl', 'Corner Brook', 'Conception Bay South'],
+                'Prince Edward Island': ['Charlottetown', 'Summerside', 'Stratford', 'Cornwall']
+            },
+            tunisia: {
+                'Tunis': ['Tunis', 'La Marsa', 'Sidi Bou Said', 'Carthage', 'Le Bardo'],
+                'Ariana': ['Ariana', 'Ettadhamen', 'Raoued', 'Kalaat el-Andalous', 'Sidi Thabet'],
+                'Ben Arous': ['Ben Arous', 'Rades', 'Hammam Lif', 'Bou Mhel el-Bassatine', 'Ezzahra'],
+                'Sfax': ['Sfax', 'Sakiet Ezzit', 'Sakiet Eddaier', 'Chihia', 'Menzel Chaker'],
+                'Sousse': ['Sousse', 'Msaken', 'Kalaa Kebira', 'Sidi Bou Ali', 'Enfida'],
+                'Kairouan': ['Kairouan', 'Sbikha', 'Oueslatia', 'Haffouz', 'Alaa'],
+                'Bizerte': ['Bizerte', 'Menzel Bourguiba', 'Mateur', 'Sejnane', 'Joumine'],
+                'Gabès': ['Gabès', 'Mareth', 'Metouia', 'El Hamma', 'Nouvelle Matmata'],
+                'Monastir': ['Monastir', 'Ksar Hellal', 'Moknine', 'Jemmal', 'Bembla'],
+                'Gafsa': ['Gafsa', 'Metlaoui', 'Redeyef', 'Moulares', 'Sened']
+            }
+        };
+
+        const countrySelect = document.getElementById('country');
+        const regionSelect = document.getElementById('region');
+        const citySelect = document.getElementById('city');
+        const languageSelect = document.getElementById('language');
+        const ctaButton = document.getElementById('ctaButton');
+
+        function updateLanguage() {
+            const selectedLang = languageSelect.value;
             const lang = translations[selectedLang];
             
             if (lang) {
                 document.getElementById('headline').innerHTML = lang.headline;
                 document.getElementById('subtitle').textContent = lang.subtitle;
                 document.getElementById('ctaButton').textContent = lang.cta;
+                
+                // Update placeholder texts
+                countrySelect.options[0].textContent = lang.selectCountry;
+                regionSelect.options[0].textContent = lang.selectRegion;
+                citySelect.options[0].textContent = lang.selectCity;
+                
+                // Update regions and cities if country is selected
+                updateRegions();
+            }
+        }
+
+        function updateRegions() {
+            const selectedCountry = countrySelect.value;
+            const selectedLang = languageSelect.value;
+            
+            regionSelect.innerHTML = `<option value="">${translations[selectedLang].selectRegion}</option>`;
+            citySelect.innerHTML = `<option value="">${translations[selectedLang].selectCity}</option>`;
+            
+            if (selectedCountry && locationData[selectedCountry]) {
+                const regions = Object.keys(locationData[selectedCountry]);
+                regions.forEach(region => {
+                    const option = document.createElement('option');
+                    option.value = region;
+                    option.textContent = region;
+                    regionSelect.appendChild(option);
+                });
+                regionSelect.style.display = 'block';
+            } else {
+                regionSelect.style.display = 'none';
+                citySelect.style.display = 'none';
+            }
+            
+            checkButtonState();
+        }
+
+        function updateCities() {
+            const selectedCountry = countrySelect.value;
+            const selectedRegion = regionSelect.value;
+            const selectedLang = languageSelect.value;
+            
+            citySelect.innerHTML = `<option value="">${translations[selectedLang].selectCity}</option>`;
+            
+            if (selectedCountry && selectedRegion && locationData[selectedCountry][selectedRegion]) {
+                const cities = locationData[selectedCountry][selectedRegion];
+                cities.forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+                citySelect.style.display = 'block';
+            } else {
+                citySelect.style.display = 'none';
+            }
+            
+            checkButtonState();
+        }
+
+        function checkButtonState() {
+            const countrySelected = countrySelect.value !== '';
+            const regionSelected = regionSelect.value !== '';
+            const citySelected = citySelect.value !== '';
+            
+            const shouldEnable = countrySelected && regionSelected && citySelected;
+            
+            if (shouldEnable) {
+                ctaButton.classList.add('enabled');
+            } else {
+                ctaButton.classList.remove('enabled');
+            }
+        }
+
+        languageSelect.addEventListener('change', updateLanguage);
+        countrySelect.addEventListener('change', updateRegions);
+        regionSelect.addEventListener('change', updateCities);
+        citySelect.addEventListener('change', checkButtonState);
+
+        // Prevent navigation if button is disabled
+        ctaButton.addEventListener('click', function(e) {
+            if (!this.classList.contains('enabled')) {
+                e.preventDefault();
             }
         });
     </script>
 </body>
 </html>
+
